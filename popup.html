@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Plotly quick importer</title>
+    <link rel="stylesheet" type="text/css" href="popup.css" />
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:600,400,300" />
+  </head>
+
+  <!--
+    tabindex="1" avoids annoying autofocus
+    see http://stackoverflow.com/questions/16701082/chrome-extension-first-link-is-auto-focused-in-popup
+  -->
+  <body tabindex="1">
+
+    <div class="header">
+      <a href="https://plot.ly/" target="_blank">Plotly</a> Web Import
+    </div>
+
+    <div class="on-plotly--message mainsection">
+      Welcome to Plotly!
+      If you navigate to a page with links to recognized data files,
+      you can use the links in this window and embedded in
+      the page to quickly import the data into Plotly.
+    </div>
+
+    <div class="no-links--message mainsection">
+      No data file links were found on this page.
+      If you navigate to a page with links to recognized data files,
+      you can use the links in this window and embedded in
+      the page to quickly import the data into Plotly.
+    </div>
+
+    <div class="plotly-link mainsection">
+      <div class="plotly-link--message"></div>
+      <div class="plotly-link--links">
+        <ul></ul>
+      </div>
+    </div>
+
+    <div class="for-import mainsection">
+      <div class="for-import--message"></div>
+      <div class="for-import--link">
+        <ul></ul>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+
+  </body>
+</html>
+

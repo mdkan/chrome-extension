@@ -1,0 +1,47 @@
+body {
+    width: 300px;
+    overflow-x: hidden;
+    font-family: 'Open Sans',verdana,arial,sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+.on-plotly--message, .plotly-link, .for-import, .no-links--message {
+    display: none;
+}
+
+.on-plotly .on-plotly-message,
+.no-links .no-links--message,
+.has-plotly-link .plotly-link,
+.has-for-import .for-import {
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: #447adb;
+}
+
+.header {
+    padding: 5px;
+    line-height: 25px;
+    border-bottom: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
+
+.mainsection {
+    padding: 5px;
+    clear: both;
+}
+
+li {
+    display: block;
+}
+
+.logo {
+    padding: 0 5px;
+    text-align: right;
+    line-height: 25px;
+    border-top: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
