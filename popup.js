@@ -9,13 +9,14 @@ var messageBox = document.querySelector('.for-import--message'),
     plotlyLinkList = document.querySelector('.plotly-link--links ul');
 
 function linkTemplate(link) {
-    return '<li><a href="' + link.href + '">' +
+    return '<li><a href="' + link.href + '" target="_blank">' +
             link.fileName +
         '</a></li>';
 }
 
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {}, function(linkData) {
+        console.log(linkData);
         if(linkData==='PLOTLY') {
             document.body.className = 'on-plotly';
             return;
@@ -42,7 +43,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             messageBox.innerHTML = 'Found ' +
                 dataLinks.length +
                 ' data file'+(dataLinks.length>1 ? 's' : '')+
-                ' on this page. Click to import it to Plotly.';
+                ' on this page. Click to import to Plotly.';
 
             linkList.innerHTML = dataLinks.map(linkTemplate).join('');
         }
@@ -52,7 +53,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             plotlyMessageBox.innerHTML = 'Found ' +
                 plotlyLinks.length +
                 ' Plotly link'+(plotlyLinks.length>1 ? 's' : '')+
-                ' on this page. Click to open it in Plotly.';
+                ' on this page.';
 
             plotlyLinkList.innerHTML = plotlyLinks.map(linkTemplate).join('');
         }

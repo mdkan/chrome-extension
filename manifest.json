@@ -5,12 +5,22 @@
   "description": "Grab data from anywhere on the web to analyze in Plotly.",
   "version": "1.0",
 
+  "icons": {
+        "16": "images/logo_bare_16.png",
+        "32": "images/logo_bare_32.png",
+        "48": "images/logo_w_name_48.png",
+        "128": "images/logo_w_name_128.png"
+  },
+
   "background": {
     "scripts": ["background.js"]
   },
 
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": {
+        "19": "images/logo_bare_19.png",
+        "38": "images/logo_bare_38.png"
+      },
     "default_popup": "popup.html"
   },
   "permissions": [
@@ -23,5 +33,8 @@
       "js": ["content.js"],
       "all_frames": true
     }
+  ],
+  "web_accessible_resources": [
+    "images/*.png"
   ]
 }

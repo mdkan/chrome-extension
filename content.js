@@ -17,7 +17,14 @@
         'hdf5'
     ];
 
-    var linkList;
+    var linkList,
+        linkContent =
+            // '<div>' +
+                '<img src="' +
+                    chrome.extension.getURL('images/logo_bare_19.png') +
+                    '" />' +
+                '<span>Open in Plotly</span>';
+            // '</div>';
 
     function getFileLinks() {
         if(window.location.host==='plot.ly') {
@@ -26,8 +33,14 @@
         }
 
         linkList = nodeListToArray(
-                document.querySelectorAll('a[href]') )
+                document.querySelectorAll('[href]') )
             .map(function(link) {
+                if(link.parentElement.className
+                        .indexOf('plotly-link-external')!==-1) {
+                    // don't match the links we made!
+                    return false;
+                }
+
                 var fileName = link.href.replace(/.*\//,''),
                     parts = fileName.split('.'),
                     extension = parts[parts.length-1].toLowerCase(),
@@ -59,14 +72,19 @@
                 }
                 // data files that are NOT explicitly linked to Plotly already
                 else if(dataExtensions.indexOf(extension)!==-1) {
-                    var plotlyHref = 'https://plot.ly/external?url='+
+                    var plotlyHref = 'https://plot.ly/external?url=' +
                             encodeURIComponent(link.href);
-                    link.insertAdjacentHTML('afterend',
-                        '<div class="plotly-link-external">'+
-                            '<a href="' + plotlyHref + '" target="_blank">'+
-                                'plotly'+
-                            '</a>'+
-                        '</div>');
+
+                    if(link.className.indexOf('plotlylinked')===-1) {
+                        link.classList.add('plotlylinked');
+                        link.insertAdjacentHTML('afterend',
+                            '<div class="plotly-link-external"><a href="' +
+                                    plotlyHref + '" target="_blank">' +
+                                    linkContent +
+                                    // '<span></span>' +
+                                '</a>' +
+                            '</div>');
+                    }
 
                     return {
                         href:plotlyHref,
@@ -78,11 +96,27 @@
             .filter(function(link) { return link; });
     }
 
+    function debounce(fn, delay) {
+        var timer = null;
+        return function () {
+            var context = this,
+                args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                fn.apply(context, args);
+            }, delay);
+        };
+    }
     function nodeListToArray(nl) {
         var arr = [];
         for(var i=-1,l=nl.length>>>0;++i!==l;arr[i]=nl[i]);
         return arr;
     }
+
+    setTimeout(getFileLinks,200);
+
+    document.body.addEventListener('DOMSubtreeModified',
+        debounce(getFileLinks,400), false);
 
     getFileLinks();
 
